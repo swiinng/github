@@ -1,2 +1,4 @@
 # github
-all things related github—devaxe, client, automation, and more
+all things related github—devaxe, automation, and more
+
+https://github.com/PyGithub/PyGithub
