@@ -1,11 +1,18 @@
 from cryptography.fernet import Fernet
 
+from storage_utils import StorageUtils
+
 class EncryptionUtils:
 
   @staticmethod
   def get_secret(path: str) -> bytes:
-     with open(path, "rb") as key_file:
-        return key_file.read()
+    return StorageUtils.load_data(path=path)
+     
+  @staticmethod
+  def generate_secret(path: str) -> bytes:
+    secret = Fernet.generate_key()
+    StorageUtils.save_data(data=secret, path=path, overwrite=True)
+    return secret
 
   @staticmethod
   def encrypt_data(data, secret: bytes | str) -> bytes:
@@ -19,4 +26,4 @@ class EncryptionUtils:
 
     if decode:
        return decrypted_data.decode()
-    return decrypted_data 
+    return decrypted_data
