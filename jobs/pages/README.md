@@ -1,0 +1,1 @@
+github pages generator for all orgs and repos
