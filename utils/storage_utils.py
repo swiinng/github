@@ -14,7 +14,7 @@ class StorageUtils:
 
     @staticmethod
     def load_data(path: str, mode = "rb", decode: bool = False) -> bytes | str:
-        if exists(path):
+        if not exists(path):
             raise FileNotFoundError(f"File '{path}' not found.")
 
         with open(path, mode) as file:
