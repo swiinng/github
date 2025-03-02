@@ -1,6 +1,8 @@
+from github import Auth
+from github import Github
+
 from utils.encryption_utils import EncryptionUtils
 from utils.hash_utils import HashUtils
-
 from utils.storage_utils import StorageUtils
 
 class TokenUtils:
@@ -26,3 +28,13 @@ class TokenUtils:
     encrypted_token = StorageUtils.load_data(path=token_path)
     return EncryptionUtils.decrypt_data(data=encrypted_token, secret=secret)
   
+  @staticmethod
+  def validate_token(user: str, value: str) -> bool:
+    try:
+      auth_user = Github(auth=Auth.Token(token=value)).get_user()
+      if not auth_user.name == user:
+        print(f'GitHub Accounts do not match: Token account `{auth_user.name}` v. User `{user}`')
+    except Exception as e:
+      print('Unable to validate token: ', e)
+      return False
+    return True

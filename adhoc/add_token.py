@@ -15,11 +15,16 @@ def _add_token(user: str, name: str, value: str):
   if not tokens_repo or not secret_path:
     print("Failed to load environment variables")
     return
+  
+  if not TokenUtils.validate_token(user=user, value=value):
+    print('Unable to validate token. Not attaching!')
+    return
 
   secret = EncryptionUtils.get_secret(secret_path)
 
   try:
     TokenUtils.add_token(user=user, name=name, value=value, secret=secret, base_path=tokens_repo)
+    print(f'Successfully attached token `{name}` to user `{user}`')
   except Exception as e:
     print(f'Failed to add token {user} - {name} - {value}: ', e)
 
@@ -31,10 +36,11 @@ if __name__ == '__main__':
   parser.add_argument(
       "-n", "--name", "--tokenname", required=True, type=str, help="Token Name"
   )
-  parser.add_argument(
-      "-v", "--value", "--tokenvalue", required=True, type=str, help="Token Value"
-  )
+  value = input('Enter the genrated token: ').strip()
+  while not value:
+    print("Token cannot be empty!")
+    value = input('Enter the genrated token: ').strip()
 
   args = parser.parse_args()
 
-  _add_token(user=args.user, name=args.name, value=args.value)
+  _add_token(user=args.user, name=args.name, value=value)
