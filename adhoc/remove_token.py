@@ -2,10 +2,9 @@ from argparse import ArgumentParser
 from dotenv import load_dotenv
 from os import getenv
 
-from utils.encryption_utils import EncryptionUtils
 from utils.token_utils import TokenUtils 
 
-def _save_token(user: str, name: str, value: str):
+def _remove_token(user: str, name: str):
   if not load_dotenv():
     print("Failed to load enviromnent")
     return
@@ -16,12 +15,10 @@ def _save_token(user: str, name: str, value: str):
     print("Failed to load environment variables")
     return
 
-  secret = EncryptionUtils.get_secret(secret_path)
-
   try:
-    TokenUtils.save_token(user=user, name=name, value=value, secret=secret, base_path=tokens_repo)
+    TokenUtils.remove_token(user=user, name=name, base_path=tokens_repo)
   except Exception as e:
-    print(f'Failed to save token {user} - {name} - {value}: ', e)
+    print(f'Failed to remove token {user} - {name}: ', e)
 
 if __name__ == '__main__':
   parser = ArgumentParser(description="Save Token")
@@ -31,10 +28,7 @@ if __name__ == '__main__':
   parser.add_argument(
       "-n", "--name", "--tokenname", required=True, type=str, help="Token Name"
   )
-  parser.add_argument(
-      "-v", "--value", "--tokenvalue", required=True, type=str, help="Token Value"
-  )
 
   args = parser.parse_args()
 
-  _save_token(user=args.user, name=args.name, value=args.value)
+  _remove_token(user=args.user, name=args.name)

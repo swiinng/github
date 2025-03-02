@@ -1,4 +1,4 @@
-from os import makedirs
+from os import makedirs, remove
 from os.path import dirname, exists
 
 class StorageUtils:
@@ -21,3 +21,12 @@ class StorageUtils:
             if decode:
                 return file.read().decode()
             return file.read()
+        
+    @staticmethod
+    def delete_file(path: str) -> None:
+        makedirs(dirname(path), exist_ok=True)
+
+        if not exists(path):
+            raise FileNotFoundError(f"File '{path}' does not exist.")
+
+        remove(path)
