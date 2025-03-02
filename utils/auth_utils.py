@@ -1,5 +1,6 @@
 from github import Auth
-from token_utils import TokenUtils
+
+from utils.token_utils import TokenUtils
 
 class AuthUtils:
 

@@ -1,0 +1,1 @@
+maybe integrate these to run on every commit

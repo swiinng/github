@@ -1,6 +1,6 @@
 from cryptography.fernet import Fernet
 
-from storage_utils import StorageUtils
+from utils.storage_utils import StorageUtils
 
 class EncryptionUtils:
 

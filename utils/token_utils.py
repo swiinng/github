@@ -1,6 +1,7 @@
-from encryption_utils import EncryptionUtils
-from hash_utils import HashUtils
-from storage_utils import StorageUtils
+from utils.encryption_utils import EncryptionUtils
+from utils.hash_utils import HashUtils
+
+from utils.storage_utils import StorageUtils
 
 class TokenUtils:
 

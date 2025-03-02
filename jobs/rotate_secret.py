@@ -12,7 +12,10 @@ def rotate_secret():
   if not secret_path:
     print("Failed to get secret path")
 
-  EncryptionUtils.generate_secret(secret_path)
+  try:
+    EncryptionUtils.generate_secret(secret_path)
+  except Exception as e:
+    print('Failed to rotate secret: ', e)
   
 if __name__ == '__main__':
   rotate_secret()

@@ -17,8 +17,11 @@ def _save_token(user: str, name: str, value: str):
     return
 
   secret = EncryptionUtils.get_secret(secret_path)
-  
-  TokenUtils.save_token(user=user, name=name, value=value, secret=secret, base_path=tokens_repo)
+
+  try:
+    TokenUtils.save_token(user=user, name=name, value=value, secret=secret, base_path=tokens_repo)
+  except Exception as e:
+    print(f'Failed to save token {user} - {name} - {value}: ', e)
 
 if __name__ == '__main__':
   parser = ArgumentParser(description="Save Token")
